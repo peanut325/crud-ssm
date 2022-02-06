@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+    <!-- 加载配置文件 -->
+    <properties resource="jdbc.properties"/>
+
+    <!-- 核心配置 -->
+    <context id="default" targetRuntime="MyBatis3">
+
+        <!--去掉自动生成注释-->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+
+        <!-- JDBC 连接数据库 -->
+        <jdbcConnection driverClass="${pro.driverClass}"
+                        connectionURL="${pro.url}"
+                        userId="${pro.username}"
+                        password="${pro.password}">
+            <!-- connectionURL属性，防止乱码 -->
+            <property name="useUnicode" value="true"/>
+            <!-- connectionURL属性，防止乱码 -->
+            <property name="characterEncoding" value="UTF-8"/>
+            <!-- connectionURL属性，防止报时间错误 -->
+            <property name="serverTimezone" value="UTC"/>
+            <!-- connectionURL属性，防止生成不同数据库同名表的代码 -->
+            <property name="nullCatalogMeansCurrent" value="true"/>
+        </jdbcConnection>
+
+        <!-- Java 类型解释器 -->
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <!--javaModelGenerator:指定javaBean的生成策略
+                targetPackage:目标包名
+                targetProject:目标工程
+        -->
+        <javaModelGenerator targetPackage="pojo" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <!--sqlMapGenerator:sql映射生成策略-->
+        <sqlMapGenerator targetPackage="mapper"  targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+
+        <!--javaClientGenerator:指定mapper接口所在的位置-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="dao"  targetProject="src/main/java">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+
+        <!--table指定要逆向分析哪张表:根据表创建javaBean
+                tableName表名
+                domainObjectName创建javaBean对象类名
+                -->
+        <table tableName="tbl_emp" domainObjectName="Employee"></table>
+        <table tableName="tbl_dept" domainObjectName="Department"></table>
+
+
+    </context>
+</generatorConfiguration>
